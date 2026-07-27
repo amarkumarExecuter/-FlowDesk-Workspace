@@ -1,0 +1,21 @@
+@media (max-width: 768px) {
+    .dashboard-layout { flex-direction: column; }
+    
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        height: 100vh;
+        z-index: 1000;
+        transition: 0.3s ease;
+    }
+    
+    .sidebar.open { left: 0; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
+    
+    .mobile-toggle { display: block; }
+    .search-bar { display: none; }
+    
+    .dashboard-widgets { grid-template-columns: 1fr; }
+    
+    .table-container { overflow-x: auto; }
+}
