@@ -8,23 +8,121 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+    <!-- HEADER -->
     <header class="navbar">
         <div class="logo">
-            <!-- <img src="assets/logo.png" alt="FlowDesk Logo"> -->
-            <h2>FlowDesk</h2>
+            <h2><span class="text-primary">Flow</span>Desk</h2>
         </div>
-        <nav>
-            <a href="login.html" class="btn btn-primary">Login / Sign Up</a>
+        <nav class="desktop-nav">
+            <a href="#features">Features</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#pricing">Pricing</a>
         </nav>
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-outline">Log In</a>
+            <a href="login.html" class="btn btn-primary">Sign Up Free</a>
+        </div>
     </header>
 
+    <!-- HERO SECTION -->
     <main class="hero">
-        <div class="hero-content">
-            <h1>Unified Workspace for Distributed Teams</h1>
-            <p>Manage projects, streamline approvals, and accelerate client delivery workflows in one intuitive dashboard.</p>
-            <a href="login.html" class="btn btn-large">Get Started Free</a>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>Manage your distributed team's workflow in <span class="text-primary">one place.</span></h1>
+                <p>FlowDesk brings projects, approvals, and client delivery together. Say goodbye to scattered tools and accelerate your productivity today.</p>
+                <div class="hero-buttons">
+                    <a href="login.html" class="btn btn-large btn-primary">Get Started Free</a>
+                    <a href="#features" class="btn btn-large btn-outline">Explore Features</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Using Unsplash free image for a workspace/laptop vibe -->
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="FlowDesk Dashboard Preview" class="shadow-img">
+            </div>
         </div>
     </main>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose FlowDesk?</h2>
+                <p>Everything you need to scale your agency or enterprise team smoothly.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80" alt="Team Collaboration">
+                    <h3>Real-Time Collaboration</h3>
+                    <p>Keep your entire team on the same page with instant updates, shared boards, and live notifications.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80" alt="Data Analytics">
+                    <h3>Smart Analytics</h3>
+                    <p>Track delivery rates, identify bottlenecks, and generate one-click reports for your clients.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=80" alt="Automated Workflows">
+                    <h3>1-Click Approvals</h3>
+                    <p>Streamline client sign-offs. Our automated workflow ensures work gets approved faster than ever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL SECTION -->
+    <section id="testimonials" class="testimonial-section">
+        <div class="container text-center">
+            <h2>"FlowDesk completely changed how our agency operates. We deliver projects 40% faster and our clients love the transparency."</h2>
+            <div class="user-profile center-profile">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Sarah Jenkins" class="avatar-img">
+                <div>
+                    <strong>Sarah Jenkins</strong>
+                    <p>Operations Manager, TechFlow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2>Ready to boost your team's productivity?</h2>
+            <p>Join over 10,000+ teams who have upgraded their workflow.</p>
+            <a href="login.html" class="btn btn-large btn-primary">Create Your Free Workspace</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h2>FlowDesk</h2>
+                <p>The unified workspace for the modern distributed workforce.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <a href="#">Features</a>
+                <a href="#">Integrations</a>
+                <a href="#">Pricing</a>
+                <a href="#">Changelog</a>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 FlowDesk Inc. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="js/utils.js"></script>
     <script src="js/main.js"></script>
