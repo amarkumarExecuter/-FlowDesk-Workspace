@@ -1,0 +1,62 @@
+:root {
+    --primary-color: #4F46E5;
+    --primary-hover: #4338CA;
+    --bg-light: #F9FAFB;
+    --text-dark: #111827;
+    --text-muted: #6B7280;
+    --white: #FFFFFF;
+    --border-color: #E5E7EB;
+    --radius: 8px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-large { padding: 15px 30px; font-size: 1.1rem; }
+.btn-block { width: 100%; }
+.btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-dark); }
+
+/* Landing Page Specific */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: var(--white);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+}
+.hero h1 { font-size: 3rem; margin-bottom: 20px; }
+.hero p { color: var(--text-muted); margin-bottom: 40px; font-size: 1.2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
