@@ -1,5 +1,5 @@
 # -FlowDesk-Workspace
-
+```
 flowdesk-workspace/
 │
 ├── app/
@@ -115,8 +115,8 @@ flowdesk-workspace/
 ├── tsconfig.json
 ├── tailwind.config.ts
 └── README.md
-
-
+```
+```
 FlowDesk Workspace
 
 ├── Authentication
@@ -187,3 +187,4 @@ FlowDesk Workspace
     ├── Billing
     ├── API Keys
     └── Integrations
+```
