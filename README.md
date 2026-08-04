@@ -50,6 +50,19 @@ flowdesk-workspace/
 │   ├── images/
 │   ├── icons/
 │   └── logo.png
+|
+|
+├── server/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   ├── app.js
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+│
 │
 └── README.md
 ```
