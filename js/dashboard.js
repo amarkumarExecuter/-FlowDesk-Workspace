@@ -1,57 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Auth Check
-    const user = utils.getUser();
-    if (!user) {
-        window.location.href = 'login.html'; // Redirect if not logged in
-        return;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// --- APNI FIREBASE KEYS YAHAN RAKHNA ---
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyA75sjVya0r-vS4yoQrBvG2YF2ShLkyB_M",
+  authDomain: "flowdesk-workspace.firebaseapp.com",
+  projectId: "flowdesk-workspace",
+  storageBucket: "flowdesk-workspace.firebasestorage.app",
+  messagingSenderId: "691632052472",
+  appId: "1:691632052472:web:b3101c5159e0463396430d",
+  measurementId: "G-TJ3N189PWT"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// --- YE HAI TERA RENDER LINK ---
+const RENDER_URL = "https://flowdesk-workspace.onrender.com"; 
+
+// Backend se data lane wala function
+async function fetchBackendStats() {
+    try {
+        const response = await fetch(`${RENDER_URL}/api/stats`);
+        const data = await response.json();
+        
+        // HTML mein data bhar rahe hain
+        document.getElementById('server-status').innerText = data.serverStatus;
+        document.getElementById('active-users').innerText = data.activeUsers;
+        document.getElementById('api-version').innerText = data.version;
+        
+        console.log("Backend Connected!");
+    } catch (err) {
+        console.log("Backend connection error:", err);
     }
-    
-    // Set Username
-    document.getElementById('userName').textContent = user.name;
+}
 
-    // 2. Mobile Sidebar Toggle
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const sidebar = document.getElementById('sidebar');
-    
-    if(mobileBtn) {
-        mobileBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
+// Check Login Status
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById('user-email').innerText = user.email;
+        fetchBackendStats(); // Login hote hi backend se baat karo
+    } else {
+        window.location.href = "login.html";
     }
+});
 
-    // 3. Logout
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-        utils.clearUser();
-        window.location.href = 'login.html';
-    });
-
-    // 4. Mock Data Generation for Dashboard
-    const mockData = {
-        activeProjects: 12,
-        pendingApprovals: 5,
-        deliveryRate: "94%",
-        workflows: [
-            { project: "Website Redesign", client: "Acme Corp", status: "active", date: "2026-08-15" },
-            { project: "Q3 Marketing Assets", client: "TechFlow", status: "pending", date: "2026-07-30" },
-            { project: "API Integration", client: "GlobalNet", status: "active", date: "2026-08-05" }
-        ]
-    };
-
-    // Populate Widgets
-    document.getElementById('activeProjectsCount').textContent = mockData.activeProjects;
-    document.getElementById('pendingApprovalsCount').textContent = mockData.pendingApprovals;
-    document.getElementById('deliveryRate').textContent = mockData.deliveryRate;
-
-    // Populate Table
-    const tbody = document.querySelector('#workflowTable tbody');
-    mockData.workflows.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><strong>${item.project}</strong></td>
-            <td>${item.client}</td>
-            <td><span class="status ${item.status}">${item.status.toUpperCase()}</span></td>
-            <td>${utils.formatDate(item.date)}</td>
-        `;
-        tbody.appendChild(tr);
-    });
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    signOut(auth).then(() => window.location.href = "login.html");
 });
