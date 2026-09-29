@@ -1,17 +1,17 @@
 // Utility functions shared across the app
 const utils = {
     // Mock Save to LocalStorage
-    saveUser: (email) => {
-        localStorage.setItem('flowdesk_user', email);
-    },
-    // Get Current User
-    getUser: () => {
-        return localStorage.getItem('flowdesk_user');
-    },
-    // Logout
-    clearUser: () => {
-        localStorage.removeItem('flowdesk_user');
-    },
+   saveUser: (user) => {
+    localStorage.setItem('user', JSON.stringify(user));
+},
+
+getUser: () => {
+    return JSON.parse(localStorage.getItem('user'));
+},
+
+clearUser: () => {
+    localStorage.removeItem('user');
+},
     // Format Date
     formatDate: (dateString) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };

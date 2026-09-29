@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Set Username
-    document.getElementById('userName').textContent = user.split('@')[0];
+    document.getElementById('userName').textContent = user.name;
 
     // 2. Mobile Sidebar Toggle
     const mobileBtn = document.getElementById('mobileMenuBtn');

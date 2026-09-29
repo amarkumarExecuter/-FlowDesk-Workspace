@@ -1,10 +1,9 @@
+const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-
-require("dotenv").config();
 
 const app = express();
 
@@ -12,13 +11,12 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("✅ MongoDB Connected"))
-.catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-    res.send("FlowDesk API Running");
+    res.send("🚀 FlowDesk Backend Running...");
 });
 
 module.exports = app;
