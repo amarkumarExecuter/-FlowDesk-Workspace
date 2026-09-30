@@ -17,42 +17,55 @@
             <p class="text-slate-500 mt-2">Enter your workspace details</p>
         </div>
         
-        <!-- Form ID check karo niche -->
         <form id="login-form" class="space-y-6">
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                <input type="email" id="email" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder="name@company.com" required>
+                <input type="email" id="email" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all" placeholder="name@company.com" required>
             </div>
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Password</label>
-                <input type="password" id="password" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder="••••••••" required>
+                <input type="password" id="password" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all" placeholder="••••••••" required>
             </div>
             <button type="submit" id="loginBtn" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl hover:bg-indigo-600 transition-all shadow-xl shadow-indigo-100">
                 Continue to Workspace
             </button>
         </form>
+
+        <!-- OR Divider -->
+        <div class="relative my-8">
+            <div class="absolute inset-0 flex items-center"><span class="w-full border-t border-slate-200"></span></div>
+            <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-2 text-slate-400 font-bold">Or continue with</span></div>
+        </div>
+
+        <!-- Google Login Button -->
+        <button id="googleBtn" type="button" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 text-slate-700 font-bold py-4 rounded-2xl hover:bg-slate-50 transition-all shadow-sm">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6">
+            Sign in with Google
+        </button>
     </div>
 
-    <!-- JavaScript Isi File Ke Andar -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // 1. APNI KEYS YAHAN DALO
-       const firebaseConfig = {
-  apiKey: "AIzaSyA75sjVya0r-vS4yoQrBvG2YF2ShLkyB_M",
-  authDomain: "flowdesk-workspace.firebaseapp.com",
-  projectId: "flowdesk-workspace",
-  storageBucket: "flowdesk-workspace.firebasestorage.app",
-  messagingSenderId: "691632052472",
-  appId: "1:691632052472:web:b3101c5159e0463396430d",
-  measurementId: "G-TJ3N189PWT"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyA75sjVya0r-vS4yoQrBvG2YF2ShLkyB_M",
+            authDomain: "flowdesk-workspace.firebaseapp.com",
+            projectId: "flowdesk-workspace",
+            storageBucket: "flowdesk-workspace.firebasestorage.app",
+            messagingSenderId: "691632052472",
+            appId: "1:691632052472:web:b3101c5159e0463396430d",
+            measurementId: "G-TJ3N189PWT"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
         const loginForm = document.getElementById('login-form');
+        const googleBtn = document.getElementById('googleBtn');
 
+        // 1. EMAIL/PASSWORD LOGIN
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -62,15 +75,24 @@
             btn.innerText = "Verifying...";
             btn.disabled = true;
 
-            // Firebase Login
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    window.location.href = "dashboard.html";
-                })
+                .then(() => window.location.href = "dashboard.html")
                 .catch((error) => {
                     btn.innerText = "Continue to Workspace";
                     btn.disabled = false;
                     alert("Galti: " + error.message);
+                });
+        });
+
+        // 2. GOOGLE SIGN-IN
+        googleBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    console.log("Google Login Success!");
+                    window.location.href = "dashboard.html";
+                })
+                .catch((error) => {
+                    alert("Google Error: " + error.message);
                 });
         });
     </script>
