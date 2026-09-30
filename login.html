@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlowDesk | Login</title>
+    <!-- Tailwind CSS for Premium Look -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Inter', sans-serif; }</style>
@@ -11,39 +12,42 @@
 <body class="bg-[#f8fafc] min-h-screen flex items-center justify-center p-6">
 
     <div class="w-full max-w-[420px] bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200 border border-slate-100">
+        <!-- Logo & Header -->
         <div class="text-center mb-10">
-            <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">F</div>
+            <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg shadow-indigo-100">F</div>
             <h2 class="text-3xl font-bold text-slate-900">Sign In</h2>
-            <p class="text-slate-500 mt-2">Enter your workspace details</p>
+            <p class="text-slate-500 mt-2 font-medium text-sm">Welcome back to FlowDesk Workspace</p>
         </div>
         
-        <form id="login-form" class="space-y-6">
+        <!-- Email/Password Form -->
+        <form id="login-form" class="space-y-5">
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                <input type="email" id="email" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all" placeholder="name@company.com" required>
+                <input type="email" id="email" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-300 text-sm" placeholder="name@company.com" required>
             </div>
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Password</label>
-                <input type="password" id="password" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all" placeholder="••••••••" required>
+                <input type="password" id="password" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-300 text-sm" placeholder="••••••••" required>
             </div>
-            <button type="submit" id="loginBtn" class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl hover:bg-indigo-600 transition-all shadow-xl shadow-indigo-100">
+            <button type="submit" id="loginBtn" class="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl hover:bg-indigo-600 transition-all shadow-xl shadow-slate-200 transform hover:-translate-y-1">
                 Continue to Workspace
             </button>
         </form>
 
-        <!-- OR Divider -->
+        <!-- Divider -->
         <div class="relative my-8">
-            <div class="absolute inset-0 flex items-center"><span class="w-full border-t border-slate-200"></span></div>
-            <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-2 text-slate-400 font-bold">Or continue with</span></div>
+            <div class="absolute inset-0 flex items-center"><span class="w-full border-t border-slate-100"></span></div>
+            <div class="relative flex justify-center text-[10px] uppercase"><span class="bg-white px-4 text-slate-400 font-bold tracking-widest">Or secure login with</span></div>
         </div>
 
         <!-- Google Login Button -->
-        <button id="googleBtn" type="button" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 text-slate-700 font-bold py-4 rounded-2xl hover:bg-slate-50 transition-all shadow-sm">
+        <button id="googleBtn" type="button" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 text-slate-700 font-bold py-4 rounded-2xl hover:bg-slate-50 transition-all shadow-sm transform hover:-translate-y-1">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6">
             Sign in with Google
         </button>
     </div>
 
+    <!-- JavaScript logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -58,6 +62,7 @@
             measurementId: "G-TJ3N189PWT"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
@@ -65,7 +70,7 @@
         const loginForm = document.getElementById('login-form');
         const googleBtn = document.getElementById('googleBtn');
 
-        // 1. EMAIL/PASSWORD LOGIN
+        // --- 1. EMAIL/PASSWORD LOGIN ---
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -76,23 +81,31 @@
             btn.disabled = true;
 
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => window.location.href = "dashboard.html")
-                .catch((error) => {
-                    btn.innerText = "Continue to Workspace";
-                    btn.disabled = false;
-                    alert("Galti: " + error.message);
-                });
-        });
-
-        // 2. GOOGLE SIGN-IN
-        googleBtn.addEventListener('click', () => {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log("Google Login Success!");
+                .then(() => {
                     window.location.href = "dashboard.html";
                 })
                 .catch((error) => {
-                    alert("Google Error: " + error.message);
+                    btn.innerText = "Continue to Workspace";
+                    btn.disabled = false;
+                    alert("Login Failed: " + error.message);
+                });
+        });
+
+        // --- 2. GOOGLE LOGIN (FIXED) ---
+        googleBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    console.log("Success! Redirecting...");
+                    window.location.href = "dashboard.html";
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/unauthorized-domain') {
+                        alert("Galti: Firebase Console mein apni Vercel URL (flow-desk-workspace.vercel.app) ko 'Authorized Domains' mein add karo.");
+                    } else if (error.code === 'auth/popup-closed-by-user') {
+                        // User pop up
+                    } else {
+                        alert("Google Error: " + error.message);
+                    }
                 });
         });
     </script>
