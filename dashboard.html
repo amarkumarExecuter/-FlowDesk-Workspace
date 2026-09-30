@@ -11,67 +11,201 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden">
     
-    <!-- Sidebar -->
-    <aside class="w-72 bg-slate-900 text-slate-400 flex flex-col border-r border-slate-800">
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-slate-900 text-slate-400 flex flex-col border-r border-slate-800 hidden md:flex">
         <div class="p-8 flex items-center gap-3">
             <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">F</div>
-            <span class="text-white text-2xl font-bold tracking-tight">FlowDesk</span>
+            <span class="text-white text-2xl font-bold tracking-tight text-indigo-600">FlowDesk</span>
         </div>
         <nav class="flex-1 px-4 space-y-2">
-            <a href="#" class="flex items-center gap-4 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-200">
+            <a href="#" class="flex items-center gap-4 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-bold shadow-lg">
                 <i class="fas fa-grid-2"></i> Overview
             </a>
             <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-800 hover:text-white transition-all font-medium">
-                <i class="fas fa-layer-group"></i> Projects
-            </a>
-            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-800 hover:text-white transition-all font-medium">
-                <i class="fas fa-check-double"></i> Approvals
+                <i class="fas fa-folder"></i> Projects
             </a>
         </nav>
-        <div class="p-6 mt-auto border-t border-slate-800 text-center">
+        <div class="p-6 mt-auto border-t border-slate-800">
             <button id="logoutBtn" class="flex items-center gap-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-2xl w-full transition-all font-bold">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-hidden">
-        <!-- Header -->
+        <!-- Top Header -->
         <header class="h-24 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-10">
             <div>
-                <h2 class="text-2xl font-bold text-slate-900">Workspace Overview</h2>
-                <p class="text-slate-500 text-sm font-medium">Real-time Project Tracking</p>
+                <h2 class="text-2xl font-bold text-slate-900">Dashboard</h2>
+                <p class="text-slate-500 text-sm font-medium">Manage your real projects here</p>
             </div>
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-3 bg-slate-50 p-2 pr-4 rounded-2xl border border-slate-100">
-                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold">U</div>
-                    <span id="userName" class="text-sm font-bold text-slate-700">Loading...</span>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p id="userName" class="text-sm font-bold text-indigo-600">Loading...</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase">Active Member</p>
                 </div>
+                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center font-bold">U</div>
             </div>
         </header>
 
-        <!-- Scrollable Content -->
-        <div class="flex-1 overflow-y-auto p-10 space-y-10">
-            
-            <!-- Stats Grid -->
+        <!-- Body Content -->
+        <div class="flex-1 overflow-y-auto p-10 space-y-8">
+            <!-- Stats -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-                    <h4 class="text-slate-500 font-bold uppercase text-xs mb-1">Real Projects</h4>
+                    <h4 class="text-slate-500 font-bold uppercase text-xs">Total Projects</h4>
                     <p id="realProjectCount" class="text-4xl font-extrabold text-slate-900">0</p>
                 </div>
                 <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-                    <h4 class="text-slate-500 font-bold uppercase text-xs mb-1">Server Status</h4>
+                    <h4 class="text-slate-500 font-bold uppercase text-xs">Server Status</h4>
                     <p id="serverStatus" class="text-2xl font-bold text-emerald-500">Connecting...</p>
                 </div>
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-                    <h4 class="text-slate-500 font-bold uppercase text-xs mb-1">API Version</h4>
-                    <p id="apiVersion" class="text-2xl font-bold text-indigo-600 text-center">v0.0.0</p>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm text-center">
+                    <button onclick="toggleModal()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-xl shadow-indigo-100">
+                        + New Project
+                    </button>
                 </div>
             </div>
 
-            <!-- Table Section -->
+            <!-- Project Table -->
             <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-10">
-                <div class="flex justify-between items-center mb-8">
-                    <h3 class="text-2xl font-bold text-slate-900">Recent Projects</h3>
-                    <button onclick="toggleModal()" class="bg-indigo-600 text-
+                <h3 class="text-xl font-bold mb-6">Recent Workflows</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-slate-400 text-xs font-bold uppercase border-b border-slate-100">
+                                <th class="pb-4 px-4">Project Name</th>
+                                <th class="pb-4 px-4">Client</th>
+                                <th class="pb-4 px-4">Status</th>
+                                <th class="pb-4 px-4 text-right">Added On</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="text-slate-600 text-sm font-medium">
+                            <!-- JS will fill this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- NEW PROJECT MODAL -->
+    <div id="projectModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-6">Create Project</h3>
+            <form id="project-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Project Name</label>
+                    <input type="text" id="p-name" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 outline-none" placeholder="e.g. Website Redesign" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Client Name</label>
+                    <input type="text" id="p-client" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 outline-none" placeholder="e.g. Microsoft" required>
+                </div>
+                <div class="flex gap-4 mt-8">
+                    <button type="button" onclick="toggleModal()" class="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl">Cancel</button>
+                    <button type="submit" id="saveBtn" class="flex-1 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC (Everything in one place) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // --- 1. APNI KEYS YAHAN DALO ---
+     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyA75sjVya0r-vS4yoQrBvG2YF2ShLkyB_M",
+  authDomain: "flowdesk-workspace.firebaseapp.com",
+  projectId: "flowdesk-workspace",
+  storageBucket: "flowdesk-workspace.firebasestorage.app",
+  messagingSenderId: "691632052472",
+  appId: "1:691632052472:web:b3101c5159e0463396430d",
+  measurementId: "G-TJ3N189PWT"
+};
+
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const RENDER_URL = "https://flowdesk-workspace.onrender.com";
+
+        // Modal Function
+        window.toggleModal = () => {
+            const modal = document.getElementById('projectModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        };
+
+        // Render Stats
+        async function fetchStats() {
+            try {
+                const res = await fetch(`${RENDER_URL}/api/stats`);
+                const data = await res.json();
+                document.getElementById('serverStatus').innerText = data.serverStatus;
+            } catch (e) { document.getElementById('serverStatus').innerText = "Offline"; }
+        }
+
+        // Real-time Projects
+        function loadProjects(uid) {
+            const q = query(collection(db, "projects"), where("userId", "==", uid));
+            onSnapshot(q, (snapshot) => {
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = "";
+                let count = 0;
+                snapshot.forEach((doc) => {
+                    count++;
+                    const p = doc.data();
+                    tableBody.innerHTML += `
+                        <tr class="border-b border-slate-50">
+                            <td class="py-5 px-4 font-bold text-slate-800">${p.name}</td>
+                            <td class="py-5 px-4">${p.client}</td>
+                            <td class="py-5 px-4"><span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold">ACTIVE</span></td>
+                            <td class="py-5 px-4 text-right text-slate-400">Just Now</td>
+                        </tr>`;
+                });
+                document.getElementById('realProjectCount').innerText = count;
+            });
+        }
+
+        // Save Project
+        document.getElementById('project-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.innerText = "Saving...";
+            try {
+                await addDoc(collection(db, "projects"), {
+                    name: document.getElementById('p-name').value,
+                    client: document.getElementById('p-client').value,
+                    userId: auth.currentUser.uid,
+                    createdAt: serverTimestamp()
+                });
+                toggleModal();
+                document.getElementById('project-form').reset();
+            } catch (err) { alert(err.message); }
+            saveBtn.innerText = "Save";
+        });
+
+        // Auth Check
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('userName').innerText = user.email;
+                fetchStats();
+                loadProjects(user.uid);
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => window.location.href = "login.html");
+        });
+    </script>
+</body>
+</html>
