@@ -3,128 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - FlowDesk Workspace</title>
-    <!-- Tailwind for Professional Look -->
+    <title>FlowDesk | Workspace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden">
     
     <!-- Sidebar -->
-    <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col hidden md:flex border-r border-slate-800">
-        <div class="p-8">
-            <h2 class="text-2xl font-bold text-white tracking-tight">FlowDesk</h2>
+    <aside class="w-72 bg-slate-900 text-slate-400 flex flex-col border-r border-slate-800">
+        <div class="p-8 flex items-center gap-3">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">F</div>
+            <span class="text-white text-2xl font-bold tracking-tight">FlowDesk</span>
         </div>
         <nav class="flex-1 px-4 space-y-2">
-            <a href="#" class="flex items-center space-x-3 bg-indigo-600 text-white p-3 rounded-xl font-semibold">
-                <i class="fas fa-th-large w-5"></i><span>Overview</span>
+            <a href="#" class="flex items-center gap-4 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-200">
+                <i class="fas fa-grid-2"></i> Overview
             </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
-                <i class="fas fa-folder w-5"></i><span>Projects</span>
+            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-800 hover:text-white transition-all font-medium">
+                <i class="fas fa-layer-group"></i> Projects
             </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
-                <i class="fas fa-check-double w-5"></i><span>Approvals</span>
-            </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
-                <i class="fas fa-rocket w-5"></i><span>Client Delivery</span>
-            </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
-                <i class="fas fa-cog w-5"></i><span>Settings</span>
+            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-800 hover:text-white transition-all font-medium">
+                <i class="fas fa-check-double"></i> Approvals
             </a>
         </nav>
-        <div class="p-6 border-t border-slate-800">
-            <!-- Logout Button ID fixed -->
-            <button id="logoutBtn" class="flex items-center space-x-3 text-red-400 hover:text-red-300 font-bold w-full transition p-2">
-                <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+        <div class="p-6 mt-auto border-t border-slate-800 text-center">
+            <button id="logoutBtn" class="flex items-center gap-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-2xl w-full transition-all font-bold">
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col overflow-y-auto">
-        <!-- Topbar -->
-        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-10">
-            <div class="flex items-center gap-4">
-                <button id="mobileMenuBtn" class="md:hidden text-slate-600 text-2xl">☰</button>
-                <div class="relative hidden sm:block">
-                    <i class="fas fa-search absolute left-4 top-3.5 text-slate-400"></i>
-                    <input type="text" class="pl-12 pr-4 py-2.5 bg-slate-100 border-none rounded-full w-64 focus:ring-2 focus:ring-indigo-500 outline-none text-sm" placeholder="Search projects...">
-                </div>
+    <main class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Header -->
+        <header class="h-24 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-10">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">Workspace Overview</h2>
+                <p class="text-slate-500 text-sm font-medium">Real-time Project Tracking</p>
             </div>
-            
-            <div class="flex items-center space-x-4">
-                <div class="text-right hidden sm:block">
-                    <!-- User Name ID fixed -->
-                    <p id="userName" class="text-sm font-bold text-indigo-600">Loading User...</p>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Workspace Member</p>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-3 bg-slate-50 p-2 pr-4 rounded-2xl border border-slate-100">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold">U</div>
+                    <span id="userName" class="text-sm font-bold text-slate-700">Loading...</span>
                 </div>
-                <div class="h-10 w-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold border border-indigo-200">U</div>
             </div>
         </header>
 
-        <!-- Dashboard Widgets -->
-        <div class="p-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition">
-                    <p class="text-slate-400 text-xs font-bold uppercase mb-2">Server Status</p>
-                    <h1 id="activeProjectsCount" class="text-3xl font-extrabold text-slate-900">Connecting...</h1>
-                    <p class="text-emerald-500 text-xs font-bold mt-2"><i class="fas fa-circle text-[8px] mr-1"></i> Live from Render</p>
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-10 space-y-10">
+            
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                    <h4 class="text-slate-500 font-bold uppercase text-xs mb-1">Real Projects</h4>
+                    <p id="realProjectCount" class="text-4xl font-extrabold text-slate-900">0</p>
                 </div>
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition">
-                    <p class="text-slate-400 text-xs font-bold uppercase mb-2">Active Users</p>
-                    <h1 id="pendingApprovalsCount" class="text-3xl font-extrabold text-slate-900">0</h1>
-                    <p class="text-slate-400 text-xs font-bold mt-2">Real-time stats</p>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                    <h4 class="text-slate-500 font-bold uppercase text-xs mb-1">Server Status</h4>
+                    <p id="serverStatus" class="text-2xl font-bold text-emerald-500">Connecting...</p>
                 </div>
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition border-b-4 border-b-indigo-500">
-                    <p class="text-slate-400 text-xs font-bold uppercase mb-2">API Version</p>
-                    <h1 id="deliveryRate" class="text-3xl font-extrabold text-indigo-600">v0.0.0</h1>
-                    <p class="text-slate-400 text-xs font-bold mt-2">System up to date</p>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+                    <h4 class="text-slate-500 font-bold uppercase text-xs mb-1">API Version</h4>
+                    <p id="apiVersion" class="text-2xl font-bold text-indigo-600 text-center">v0.0.0</p>
                 </div>
             </div>
 
-            <!-- Recent Workflows Table -->
-            <section class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8 mb-10">
+            <!-- Table Section -->
+            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-10">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-xl font-bold text-slate-800">Recent Workflows</h2>
-                    <button class="text-indigo-600 font-bold text-sm hover:underline">View All</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead>
-                            <tr class="text-slate-400 text-xs font-bold uppercase border-b border-slate-50">
-                                <th class="pb-4 px-4">Project Name</th>
-                                <th class="pb-4 px-4">Client</th>
-                                <th class="pb-4 px-4">Status</th>
-                                <th class="pb-4 px-4 text-right">Due Date</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-slate-600 text-sm font-medium">
-                            <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
-                                <td class="py-4 px-4">Website Redesign</td>
-                                <td class="py-4 px-4">Acme Corp</td>
-                                <td class="py-4 px-4"><span class="bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-[10px] font-bold">IN PROGRESS</span></td>
-                                <td class="py-4 px-4 text-right text-slate-400">Oct 12, 2023</td>
-                            </tr>
-                            <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
-                                <td class="py-4 px-4">Mobile App Beta</td>
-                                <td class="py-4 px-4">Global Tech</td>
-                                <td class="py-4 px-4"><span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold">COMPLETED</span></td>
-                                <td class="py-4 px-4 text-right text-slate-400">Oct 05, 2023</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Scripts Section (ZARURI HAI) -->
-    <script src="js/utils.js"></script>
-    <!-- type="module" ke bina Logout aur Stats nahi chalenge -->
-    <script type="module" src="js/dashboard.js"></script>
-</body>
-</html>
+                    <h3 class="text-2xl font-bold text-slate-900">Recent Projects</h3>
+                    <button onclick="toggleModal()" class="bg-indigo-600 text-
