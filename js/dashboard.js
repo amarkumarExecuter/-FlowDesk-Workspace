@@ -1,9 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// --- 1. APNI FIREBASE KEYS YAHAN WAPAS DALO (ZARURI HAI) ---
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+// 1. Apni Firebase Keys yahan dhyan se dalo
+ const firebaseConfig = {
   apiKey: "AIzaSyA75sjVya0r-vS4yoQrBvG2YF2ShLkyB_M",
   authDomain: "flowdesk-workspace.firebaseapp.com",
   projectId: "flowdesk-workspace",
@@ -15,59 +14,45 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const RENDER_URL = "https://flowdesk-workspace.onrender.com";
 
-// --- 2. TERA LIVE RENDER LINK ---
-const RENDER_URL = "https://flowdesk-workspace.onrender.com"; 
-
-// --- 3. BACKEND SE DATA LANE WALA FUNCTION ---
-async function fetchBackendStats() {
+// 2. Render se stats mangane ka function
+async function fetchStats() {
     try {
-        console.log("Fetching from Render...");
         const response = await fetch(`${RENDER_URL}/api/stats`);
         const data = await response.json();
         
-        // Tere Tailwind Dashboard ki IDs se match kar rahe hain
-        if(document.getElementById('activeProjectsCount')) {
-            document.getElementById('activeProjectsCount').innerText = data.serverStatus;
-        }
-        if(document.getElementById('pendingApprovalsCount')) {
-            document.getElementById('pendingApprovalsCount').innerText = data.activeUsers;
-        }
-        if(document.getElementById('deliveryRate')) {
-            document.getElementById('deliveryRate').innerText = data.version;
-        }
-        
-        console.log("Backend Connected! Data:", data);
+        // IDs match kar rahe hain HTML widgets se
+        document.getElementById('activeProjectsCount').innerText = data.serverStatus;
+        document.getElementById('pendingApprovalsCount').innerText = data.activeUsers;
+        document.getElementById('deliveryRate').innerText = data.version;
     } catch (err) {
-        console.log("Backend connection error:", err);
-        if(document.getElementById('activeProjectsCount')) {
-            document.getElementById('activeProjectsCount').innerText = "Offline";
-        }
+        console.error("Backend Error:", err);
+        document.getElementById('activeProjectsCount').innerText = "Offline";
     }
 }
 
-// --- 4. CHECK LOGIN STATUS ---
+// 3. Page load hote hi ye check karega user logged in hai ya nahi
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // Naam ya Email dikhane ke liye
-        const nameElement = document.getElementById('userName') || document.getElementById('user-email');
-        if(nameElement) {
-            nameElement.innerText = user.email;
-        }
-        
-        fetchBackendStats(); // Login hote hi Render se data mangwao
+        // User ka email Header mein dikhayega
+        document.getElementById('userName').innerText = user.email;
+        fetchStats(); // Stats fetch karo
     } else {
-        // Agar login nahi hai toh login page pe bhago
+        // Agar login nahi hai, login page bhej do
         window.location.href = "login.html";
     }
 });
 
-// --- 5. LOGOUT LOGIC ---
+// 4. Logout Button Action
 const logoutBtn = document.getElementById('logoutBtn');
-if(logoutBtn) {
+if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
         signOut(auth).then(() => {
+            alert("Logging out...");
             window.location.href = "login.html";
+        }).catch((err) => {
+            alert("Error logging out: " + err.message);
         });
     });
 }

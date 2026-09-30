@@ -23,21 +23,22 @@
             <a href="#" class="flex items-center space-x-3 bg-indigo-600 text-white p-3 rounded-xl font-semibold">
                 <i class="fas fa-th-large w-5"></i><span>Overview</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition">
+            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
                 <i class="fas fa-folder w-5"></i><span>Projects</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition">
+            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
                 <i class="fas fa-check-double w-5"></i><span>Approvals</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition">
+            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
                 <i class="fas fa-rocket w-5"></i><span>Client Delivery</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition">
+            <a href="#" class="flex items-center space-x-3 hover:bg-slate-800 p-3 rounded-xl transition font-medium">
                 <i class="fas fa-cog w-5"></i><span>Settings</span>
             </a>
         </nav>
         <div class="p-6 border-t border-slate-800">
-            <button id="logoutBtn" class="flex items-center space-x-3 text-red-400 hover:text-red-300 font-bold w-full transition">
+            <!-- Logout Button ID fixed -->
+            <button id="logoutBtn" class="flex items-center space-x-3 text-red-400 hover:text-red-300 font-bold w-full transition p-2">
                 <i class="fas fa-sign-out-alt"></i><span>Logout</span>
             </button>
         </div>
@@ -57,7 +58,8 @@
             
             <div class="flex items-center space-x-4">
                 <div class="text-right hidden sm:block">
-                    <p id="userName" class="text-sm font-bold text-slate-800 text-indigo-600">Loading User...</p>
+                    <!-- User Name ID fixed -->
+                    <p id="userName" class="text-sm font-bold text-indigo-600">Loading User...</p>
                     <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Workspace Member</p>
                 </div>
                 <div class="h-10 w-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold border border-indigo-200">U</div>
@@ -85,13 +87,13 @@
             </div>
 
             <!-- Recent Workflows Table -->
-            <section class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
+            <section class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8 mb-10">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-xl font-bold text-slate-800">Recent Workflows</h2>
                     <button class="text-indigo-600 font-bold text-sm hover:underline">View All</button>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left" id="workflowTable">
+                    <table class="w-full text-left">
                         <thead>
                             <tr class="text-slate-400 text-xs font-bold uppercase border-b border-slate-50">
                                 <th class="pb-4 px-4">Project Name</th>
@@ -107,4 +109,22 @@
                                 <td class="py-4 px-4"><span class="bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-[10px] font-bold">IN PROGRESS</span></td>
                                 <td class="py-4 px-4 text-right text-slate-400">Oct 12, 2023</td>
                             </tr>
-                            <tr class="border-b border-slate-50 hover:bg-slate-50 transiti
+                            <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
+                                <td class="py-4 px-4">Mobile App Beta</td>
+                                <td class="py-4 px-4">Global Tech</td>
+                                <td class="py-4 px-4"><span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold">COMPLETED</span></td>
+                                <td class="py-4 px-4 text-right text-slate-400">Oct 05, 2023</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts Section (ZARURI HAI) -->
+    <script src="js/utils.js"></script>
+    <!-- type="module" ke bina Logout aur Stats nahi chalenge -->
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
