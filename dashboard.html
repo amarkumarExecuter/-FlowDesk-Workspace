@@ -3,29 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowDesk | Workspace</title>
+    <title>FlowDesk | Workspace AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden">
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-900">
     
     <!-- SIDEBAR -->
-    <aside class="w-72 bg-slate-900 text-slate-400 flex flex-col border-r border-slate-800 hidden md:flex">
+    <aside class="w-72 bg-slate-950 text-slate-400 flex flex-col border-r border-slate-800 hidden md:flex">
         <div class="p-8 flex items-center gap-3">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">F</div>
-            <span class="text-white text-2xl font-bold tracking-tight text-indigo-600">FlowDesk</span>
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/20">F</div>
+            <span class="text-white text-2xl font-bold tracking-tight">FlowDesk</span>
         </div>
         <nav class="flex-1 px-4 space-y-2">
+            <p class="px-4 text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-4">Main Menu</p>
             <a href="#" class="flex items-center gap-4 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-bold shadow-lg">
                 <i class="fas fa-grid-2"></i> Overview
             </a>
-            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-800 hover:text-white transition-all font-medium">
+            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-900 hover:text-white transition-all font-medium">
                 <i class="fas fa-folder"></i> Projects
             </a>
+            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-900 hover:text-white transition-all font-medium">
+                <i class="fas fa-robot text-indigo-400"></i> AI Copilot
+            </a>
         </nav>
-        <div class="p-6 mt-auto border-t border-slate-800">
+        <div class="p-6 mt-auto border-t border-slate-900">
             <button id="logoutBtn" class="flex items-center gap-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-2xl w-full transition-all font-bold">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
@@ -37,52 +41,83 @@
         <!-- Top Header -->
         <header class="h-24 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-10">
             <div>
-                <h2 class="text-2xl font-bold text-slate-900">Dashboard</h2>
-                <p class="text-slate-500 text-sm font-medium">Manage your real projects here</p>
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Workspace</h2>
+                <p class="text-slate-500 text-sm font-medium">Smart AI Management</p>
             </div>
             <div class="flex items-center gap-4">
                 <div class="text-right">
                     <p id="userName" class="text-sm font-bold text-indigo-600">Loading...</p>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">Active Member</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Active Member</p>
                 </div>
-                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center font-bold">U</div>
+                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center font-bold border border-indigo-200 shadow-sm">U</div>
             </div>
         </header>
 
         <!-- Body Content -->
-        <div class="flex-1 overflow-y-auto p-10 space-y-8">
-            <!-- Stats -->
+        <div class="flex-1 overflow-y-auto p-10 space-y-10">
+            
+            <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-                    <h4 class="text-slate-500 font-bold uppercase text-xs">Total Projects</h4>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-shadow group">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h4 class="text-slate-500 font-bold uppercase text-[10px] tracking-widest mb-1">Total Projects</h4>
                     <p id="realProjectCount" class="text-4xl font-extrabold text-slate-900">0</p>
                 </div>
                 <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-                    <h4 class="text-slate-500 font-bold uppercase text-xs">Server Status</h4>
-                    <p id="serverStatus" class="text-2xl font-bold text-emerald-500">Connecting...</p>
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-sm"></i>
+                    </div>
+                    <h4 class="text-slate-500 font-bold uppercase text-[10px] tracking-widest mb-1">Server Status</h4>
+                    <p id="serverStatus" class="text-2xl font-bold text-emerald-500 italic">Connecting...</p>
                 </div>
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm text-center">
-                    <button onclick="toggleModal()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-xl shadow-indigo-100">
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm text-center flex items-center justify-center">
+                    <button onclick="toggleModal()" class="w-full bg-indigo-600 text-white py-5 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-xl shadow-indigo-500/20 transform hover:-translate-y-1">
                         + New Project
                     </button>
                 </div>
             </div>
 
+            <!-- AI ASSISTANT SECTION -->
+            <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-robot text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold tracking-tight text-white">FlowDesk AI Assistant</h3>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 mb-8">
+                        <input type="text" id="ai-input" class="flex-1 bg-slate-800 border border-slate-700 rounded-2xl px-6 py-4 text-white placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-indigo-600 transition-all font-medium" placeholder="Ask AI: 'How should I start a Marketing project?'">
+                        <button onclick="askAI()" id="ai-btn" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/20">Ask FlowDesk AI</button>
+                    </div>
+                    
+                    <div id="ai-response-box" class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700 hidden animate-pulse">
+                        <div class="flex gap-4">
+                            <div class="text-indigo-400 font-bold">AI:</div>
+                            <p class="text-slate-200 leading-relaxed italic" id="ai-text">Thinking...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Project Table -->
             <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-10">
-                <h3 class="text-xl font-bold mb-6">Recent Workflows</h3>
+                <h3 class="text-xl font-bold mb-8">Recent Project Workflows</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="text-slate-400 text-xs font-bold uppercase border-b border-slate-100">
-                                <th class="pb-4 px-4">Project Name</th>
-                                <th class="pb-4 px-4">Client</th>
-                                <th class="pb-4 px-4">Status</th>
-                                <th class="pb-4 px-4 text-right">Added On</th>
+                            <tr class="text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-slate-50">
+                                <th class="pb-6 px-4">Project</th>
+                                <th class="pb-6 px-4">Client</th>
+                                <th class="pb-6 px-4 text-center">Status</th>
+                                <th class="pb-6 px-4 text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody" class="text-slate-600 text-sm font-medium">
-                            <!-- JS will fill this -->
+                            <!-- JS DATA -->
                         </tbody>
                     </table>
                 </div>
@@ -91,44 +126,42 @@
     </main>
 
     <!-- NEW PROJECT MODAL -->
-    <div id="projectModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl">
-            <h3 class="text-2xl font-bold mb-6">Create Project</h3>
+    <div id="projectModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl border border-slate-100">
+            <h3 class="text-2xl font-bold mb-6 text-slate-900">Create New Project</h3>
             <form id="project-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Project Name</label>
-                    <input type="text" id="p-name" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 outline-none" placeholder="e.g. Website Redesign" required>
+                    <label class="block text-sm font-bold text-slate-700 mb-2 tracking-tight">Project Name</label>
+                    <input type="text" id="p-name" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all" placeholder="e.g. Website Redesign" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Client Name</label>
-                    <input type="text" id="p-client" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 outline-none" placeholder="e.g. Microsoft" required>
+                    <label class="block text-sm font-bold text-slate-700 mb-2 tracking-tight">Client Name</label>
+                    <input type="text" id="p-client" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-600 outline-none transition-all" placeholder="e.g. Tesla Inc." required>
                 </div>
                 <div class="flex gap-4 mt-8">
-                    <button type="button" onclick="toggleModal()" class="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl">Cancel</button>
-                    <button type="submit" id="saveBtn" class="flex-1 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg">Save</button>
+                    <button type="button" onclick="toggleModal()" class="flex-1 py-4 bg-slate-50 text-slate-500 font-bold rounded-2xl hover:bg-slate-100 transition">Cancel</button>
+                    <button type="submit" id="saveBtn" class="flex-1 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:bg-indigo-700">Save</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC (Everything in one place) -->
+    <!-- JAVASCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- 1. APNI KEYS YAHAN DALO ---
-     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA75sjVya0r-vS4yoQrBvG2YF2ShLkyB_M",
-  authDomain: "flowdesk-workspace.firebaseapp.com",
-  projectId: "flowdesk-workspace",
-  storageBucket: "flowdesk-workspace.firebasestorage.app",
-  messagingSenderId: "691632052472",
-  appId: "1:691632052472:web:b3101c5159e0463396430d",
-  measurementId: "G-TJ3N189PWT"
-};
-
+        // --- FIREBASE CONFIG (TERI KEYS) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyA75sjVya0r-vS4yoQrBvG2YF2ShLkyB_M",
+            authDomain: "flowdesk-workspace.firebaseapp.com",
+            projectId: "flowdesk-workspace",
+            storageBucket: "flowdesk-workspace.firebasestorage.app",
+            messagingSenderId: "691632052472",
+            appId: "1:691632052472:web:b3101c5159e0463396430d",
+            measurementId: "G-TJ3N189PWT"
+        };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -142,6 +175,50 @@ const firebaseConfig = {
             modal.classList.toggle('flex');
         };
 
+        // --- AI COPILOT FUNCTION ---
+        window.askAI = async () => {
+            const prompt = document.getElementById('ai-input').value;
+            const btn = document.getElementById('ai-btn');
+            const box = document.getElementById('ai-response-box');
+            const textElem = document.getElementById('ai-text');
+
+            if(!prompt) return;
+
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+            box.classList.remove('hidden');
+            textElem.innerText = "FlowDesk AI is thinking...";
+
+            try {
+                const res = await fetch(`${RENDER_URL}/api/ai/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+                const data = await res.json();
+                box.classList.remove('animate-pulse');
+                textElem.innerText = data.response;
+                textElem.classList.remove('italic');
+            } catch (e) {
+                textElem.innerText = "AI Service currently unavailable. Check Render Backend.";
+            }
+            btn.innerText = "Ask FlowDesk AI";
+            btn.disabled = false;
+        };
+
+        // --- DELETE FEATURE ---
+        window.deleteProject = async (id) => {
+            if(confirm("Confirm deletion of this project?")) {
+                await deleteDoc(doc(db, "projects", id));
+            }
+        };
+
+        // --- TOGGLE STATUS ---
+        window.toggleStatus = async (id, status) => {
+            const newStatus = status === 'ACTIVE' ? 'COMPLETED' : 'ACTIVE';
+            await updateDoc(doc(db, "projects", id), { status: newStatus });
+        };
+
         // Render Stats
         async function fetchStats() {
             try {
@@ -151,22 +228,34 @@ const firebaseConfig = {
             } catch (e) { document.getElementById('serverStatus').innerText = "Offline"; }
         }
 
-        // Real-time Projects
+        // Real-time Load
         function loadProjects(uid) {
             const q = query(collection(db, "projects"), where("userId", "==", uid));
             onSnapshot(q, (snapshot) => {
                 const tableBody = document.getElementById('tableBody');
                 tableBody.innerHTML = "";
                 let count = 0;
-                snapshot.forEach((doc) => {
+                snapshot.forEach((docSnap) => {
                     count++;
-                    const p = doc.data();
+                    const p = docSnap.data();
+                    const id = docSnap.id;
+                    const status = p.status || 'ACTIVE';
+                    const color = status === 'COMPLETED' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100';
+                    
                     tableBody.innerHTML += `
-                        <tr class="border-b border-slate-50">
-                            <td class="py-5 px-4 font-bold text-slate-800">${p.name}</td>
-                            <td class="py-5 px-4">${p.client}</td>
-                            <td class="py-5 px-4"><span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold">ACTIVE</span></td>
-                            <td class="py-5 px-4 text-right text-slate-400">Just Now</td>
+                        <tr class="border-b border-slate-50 group hover:bg-slate-50 transition">
+                            <td class="py-6 px-4 font-bold text-slate-800">${p.name}</td>
+                            <td class="py-6 px-4 text-slate-400">${p.client}</td>
+                            <td class="py-6 px-4 text-center">
+                                <button onclick="toggleStatus('${id}', '${status}')" class="${color} border px-4 py-1.5 rounded-xl text-[10px] font-bold tracking-tight transition hover:scale-105">
+                                    ${status}
+                                </button>
+                            </td>
+                            <td class="py-6 px-4 text-right">
+                                <button onclick="deleteProject('${id}')" class="w-10 h-10 rounded-xl hover:bg-red-50 hover:text-red-500 text-slate-300 transition-all">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                            </td>
                         </tr>`;
                 });
                 document.getElementById('realProjectCount').innerText = count;
@@ -182,6 +271,7 @@ const firebaseConfig = {
                 await addDoc(collection(db, "projects"), {
                     name: document.getElementById('p-name').value,
                     client: document.getElementById('p-client').value,
+                    status: 'ACTIVE',
                     userId: auth.currentUser.uid,
                     createdAt: serverTimestamp()
                 });
@@ -197,9 +287,7 @@ const firebaseConfig = {
                 document.getElementById('userName').innerText = user.email;
                 fetchStats();
                 loadProjects(user.uid);
-            } else {
-                window.location.href = "login.html";
-            }
+            } else { window.location.href = "login.html"; }
         });
 
         // Logout
