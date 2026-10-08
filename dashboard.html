@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowDesk | Intelligent Workspace</title>
+    <title>FlowDesk | AI Workspace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
         .priority-high { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; }
         .priority-medium { background: #fef3c7; color: #f59e0b; border: 1px solid #fde68a; }
         .priority-low { background: #d1fae5; color: #10b981; border: 1px solid #a7f3d0; }
-        .progress-bar { transition: width 0.5s ease-in-out; }
+        .hidden { display: none; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden text-slate-900">
@@ -24,22 +24,24 @@
             <span class="text-white text-2xl font-bold tracking-tight">FlowDesk</span>
         </div>
         <nav class="flex-1 px-4 space-y-2">
-            <a href="#" onclick="showProjectList()" class="flex items-center gap-4 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-500/20"><i class="fas fa-grid-2"></i> Dashboard</a>
-            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-900 hover:text-white transition-all font-medium"><i class="fas fa-chart-pie"></i> Analytics</a>
+            <a href="#" onclick="showProjectList()" class="flex items-center gap-4 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-bold shadow-lg"><i class="fas fa-grid-2"></i> Dashboard</a>
+            <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-900 hover:text-white transition-all font-medium"><i class="fas fa-robot text-indigo-400"></i> AI Copilot</a>
         </nav>
         <div class="p-6 mt-auto border-t border-slate-900">
-            <button id="logoutBtn" class="flex items-center gap-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-2xl w-full transition-all font-bold italic"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <button id="logoutBtn" class="flex items-center gap-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-2xl w-full transition-all font-bold">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         </div>
     </aside>
 
-    <!-- MAIN -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-hidden">
         <header class="h-24 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-10">
-            <h2 class="text-2xl font-bold tracking-tight" id="pageTitle">Smart Workspace</h2>
+            <h2 class="text-2xl font-bold" id="pageTitle">Workspace</h2>
             <div class="flex items-center gap-4">
                 <div class="text-right">
-                    <p id="userName" class="text-sm font-bold text-indigo-600">User</p>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-tight">Pro Plan Active</p>
+                    <p id="userName" class="text-sm font-bold text-indigo-600 text-right">Loading...</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-right">AI Member</p>
                 </div>
                 <img id="userPhoto" src="https://via.placeholder.com/48" class="w-12 h-12 rounded-2xl border-2 border-indigo-50 shadow-sm object-cover">
             </div>
@@ -47,73 +49,68 @@
 
         <div class="flex-1 overflow-y-auto p-10 space-y-10">
             
-            <!-- OVERVIEW -->
+            <!-- OVERVIEW SECTION -->
             <div id="overviewSection" class="space-y-10">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-                        <h4 class="text-slate-400 font-bold uppercase text-[10px] tracking-widest">Active Projects</h4>
-                        <p id="realProjectCount" class="text-4xl font-extrabold mt-1 text-slate-900">0</p>
+                        <h4 class="text-slate-400 font-bold uppercase text-[10px] tracking-widest">Real Projects</h4>
+                        <p id="realProjectCount" class="text-4xl font-extrabold text-slate-900 mt-2">0</p>
                     </div>
                     <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
-                        <h4 class="text-slate-400 font-bold uppercase text-[10px] tracking-widest">Global Progress</h4>
-                        <div class="w-full bg-slate-100 h-3 rounded-full mt-4 overflow-hidden">
-                            <div id="globalProgress" class="bg-indigo-600 h-full progress-bar" style="width: 0%"></div>
-                        </div>
+                        <h4 class="text-slate-400 font-bold uppercase text-[10px] tracking-widest">Backend</h4>
+                        <p id="serverStatus" class="text-2xl font-bold text-emerald-500 mt-2">Optimal</p>
                     </div>
-                    <button onclick="toggleModal()" class="bg-slate-900 text-white rounded-[2rem] font-bold py-6 shadow-xl hover:bg-indigo-600 transition-all transform hover:-translate-y-1">
-                        + Create Project
+                    <button onclick="toggleModal()" class="bg-indigo-600 text-white rounded-[2rem] font-bold py-6 shadow-xl hover:bg-indigo-700 transition transform hover:-translate-y-1">
+                        + New Project
                     </button>
                 </div>
 
-                <!-- AI CHAT -->
-                <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative border border-slate-800">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3"><i class="fas fa-robot text-indigo-400"></i> AI Assistant</h3>
+                <!-- AI ASSISTANT -->
+                <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl border border-slate-800">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3 text-white"><i class="fas fa-robot text-indigo-500"></i> FlowDesk AI Chat</h3>
                     <div class="flex flex-col md:flex-row gap-4 mb-6">
-                        <input type="text" id="ai-input" class="flex-1 bg-slate-800 border border-slate-700 rounded-2xl px-6 py-4 text-white outline-none focus:ring-2 focus:ring-indigo-600 font-medium" placeholder="Ask AI: 'How can I finish my projects faster?'">
-                        <button id="ai-btn" onclick="askAI()" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/20">Analyze</button>
+                        <input type="text" id="ai-input" class="flex-1 bg-slate-800 border border-slate-700 rounded-2xl px-6 py-4 text-white outline-none" placeholder="Ask AI: 'Suggest steps for a Website Redesign'">
+                        <button onclick="askAI()" id="ai-btn" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold">Ask AI</button>
                     </div>
                     <div id="ai-response-box" class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700 hidden">
-                        <p id="ai-text" class="text-slate-200 text-sm leading-relaxed italic"></p>
+                        <p class="text-slate-200 text-sm leading-relaxed" id="ai-text"></p>
                     </div>
                 </div>
 
                 <!-- TABLE -->
                 <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-10">
-                    <h3 class="text-xl font-bold mb-8">Workflows</h3>
+                    <h3 class="text-xl font-bold mb-8">Current Workflows</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left" id="projectTable">
-                            <thead><tr class="text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-slate-50"><th class="pb-6 px-4">Project</th><th class="pb-6 px-4">Client</th><th class="pb-6 px-4 text-center">Progress</th><th class="pb-6 px-4 text-right">Settings</th></tr></thead>
+                            <thead><tr class="text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-slate-50"><th class="pb-6 px-4">Project</th><th class="pb-6 px-4">Client</th><th class="pb-6 px-4 text-center">Progress</th><th class="pb-6 px-4 text-right">Actions</th></tr></thead>
                             <tbody id="tableBody"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- TASK VIEW -->
+            <!-- TASK VIEW (Inside Project) -->
             <div id="taskView" class="hidden space-y-8">
-                <button onclick="showProjectList()" class="text-indigo-600 font-bold mb-4 hover:underline"><i class="fas fa-arrow-left"></i> All Projects</button>
+                <button onclick="showProjectList()" class="text-indigo-600 font-bold mb-4 flex items-center gap-2 hover:underline"><i class="fas fa-arrow-left"></i> All Projects</button>
                 
                 <div class="bg-indigo-950 p-10 rounded-[2.5rem] text-white flex flex-col md:flex-row justify-between items-center gap-6">
                     <div>
-                        <h2 id="currentProjectName" class="text-4xl font-extrabold mb-2">Project Name</h2>
-                        <div class="flex gap-4 items-center">
-                            <p class="text-indigo-300">Intelligent Task Board</p>
-                            <span id="projectPercentage" class="bg-indigo-500/30 text-white px-3 py-1 rounded-full text-xs font-bold font-mono">0%</span>
-                        </div>
+                        <h2 id="currentProjectName" class="text-4xl font-extrabold mb-2">Project</h2>
+                        <span id="projectPercentage" class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold">0% Completed</span>
                     </div>
-                    <button id="ai-insight-btn" onclick="generateProjectHealth()" class="bg-white text-indigo-900 px-8 py-4 rounded-2xl font-bold shadow-xl hover:bg-indigo-50 transition">AI Project Insight</button>
+                    <button id="ai-task-btn" onclick="generateAITasks()" class="bg-white text-indigo-900 px-8 py-4 rounded-2xl font-bold shadow-xl hover:bg-slate-100 transition">AI Task Suggester</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                        <h3 class="font-bold mb-6 flex items-center gap-2 text-slate-400 uppercase text-xs tracking-widest"><i class="fas fa-plus-circle"></i> Add Task</h3>
-                        <div class="space-y-4">
-                            <input type="text" id="manual-task-input" class="w-full bg-slate-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-600 font-medium" placeholder="E.g. Finalize UI Design">
-                            <button onclick="addManualTask()" id="addTaskBtn" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg">Predict Priority & Add</button>
+                        <h3 class="font-bold mb-6 text-slate-400 uppercase text-[10px] tracking-widest">Quick Add</h3>
+                        <div class="flex flex-col gap-4">
+                            <input type="text" id="manual-task-input" class="w-full bg-slate-50 border p-4 rounded-2xl outline-none" placeholder="Task name...">
+                            <button onclick="addManualTask()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold">Add Task</button>
                         </div>
                     </div>
                     <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                        <h3 class="font-bold mb-6 flex items-center gap-2 text-slate-400 uppercase text-xs tracking-widest"><i class="fas fa-list"></i> Task Timeline</h3>
+                        <h3 class="font-bold mb-6 text-slate-400 uppercase text-[10px] tracking-widest">Task List</h3>
                         <div id="taskListDisplay" class="space-y-4"></div>
                     </div>
                 </div>
@@ -122,22 +119,22 @@
         </div>
     </main>
 
-    <!-- MODAL -->
-    <div id="projectModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl border border-slate-100">
-            <h3 class="text-2xl font-bold mb-6">Create Workflow</h3>
-            <form id="project-form" class="space-y-4">
-                <input type="text" id="p-name" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none text-slate-900" placeholder="Project Name" required>
-                <input type="text" id="p-client" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none text-slate-900" placeholder="Client Name" required>
-                <div class="flex gap-4 mt-6">
-                    <button type="button" onclick="toggleModal()" class="flex-1 py-4 text-slate-500 font-bold hover:text-slate-700">Cancel</button>
-                    <button type="submit" class="flex-1 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg">Start Project</button>
+    <!-- NEW PROJECT MODAL -->
+    <div id="projectModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-6">Create New Project</h3>
+            <form id="project-form" class="space-y-4 text-slate-900">
+                <input type="text" id="p-name" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border outline-none text-slate-900" placeholder="Project Name" required>
+                <input type="text" id="p-client" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border outline-none text-slate-900" placeholder="Client Name" required>
+                <div class="flex gap-4 mt-6 text-slate-900">
+                    <button type="button" onclick="toggleModal()" class="flex-1 py-4 text-slate-500 font-bold">Cancel</button>
+                    <button type="submit" class="flex-1 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg">Save Project</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- SCRIPTS -->
+    <!-- FIREBASE & LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -156,95 +153,86 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         const RENDER_URL = "https://flowdesk-workspace.onrender.com";
-        let currentOpenProjectId = null;
+        let currentPid = null;
 
-        // --- AUTH & PROFILE ---
+        // AUTH CHECK
         onAuthStateChanged(auth, (user) => {
-            if (user) { 
+            if (user) {
                 document.getElementById('userName').innerText = user.displayName || user.email;
                 if(user.photoURL) document.getElementById('userPhoto').src = user.photoURL;
-                loadProjects(user.uid); fetchStats(); 
+                loadProjects(user.uid); fetchStats();
             } else { window.location.href = "login.html"; }
         });
 
         document.getElementById('logoutBtn').onclick = () => signOut(auth).then(() => window.location.href = "login.html");
 
-        // --- PROJECT LOGIC ---
+        // PROJECT UI
         window.toggleModal = () => { const m = document.getElementById('projectModal'); m.classList.toggle('hidden'); m.classList.toggle('flex'); };
+        window.showProjectList = () => { document.getElementById('overviewSection').classList.remove('hidden'); document.getElementById('taskView').classList.add('hidden'); };
 
         async function getProgress(pid) {
             const q = query(collection(db, "tasks"), where("projectId", "==", pid));
             const snap = await getDocs(q);
             if (snap.empty) return 0;
-            const completed = snap.docs.filter(d => d.data().completed).length;
-            return Math.round((completed / snap.size) * 100);
+            const done = snap.docs.filter(d => d.data().completed).length;
+            return Math.round((done / snap.size) * 100);
         }
 
-        async function loadProjects(uid) {
+        function loadProjects(uid) {
             const q = query(collection(db, "projects"), where("userId", "==", uid));
-            onSnapshot(q, async (snapshot) => {
+            onSnapshot(q, async (snap) => {
                 const body = document.getElementById('tableBody'); body.innerHTML = "";
-                let totalTasks = 0, totalDone = 0;
-
-                for (const docSnap of snapshot.docs) {
-                    const p = docSnap.data(); const id = docSnap.id;
-                    const percent = await getProgress(id);
+                for (const d of snap.docs) {
+                    const p = d.data(); const percent = await getProgress(d.id);
                     body.innerHTML += `
                         <tr class="border-b border-slate-50 group hover:bg-slate-50 transition">
-                            <td class="py-6 px-4 font-bold text-slate-800 cursor-pointer hover:text-indigo-600" onclick="openProject('${id}', '${p.name}')">${p.name}</td>
+                            <td class="py-6 px-4 font-bold text-slate-800 cursor-pointer" onclick="openProject('${d.id}', '${p.name}')">${p.name}</td>
                             <td class="py-6 px-4 text-slate-400 font-medium">${p.client}</td>
-                            <td class="py-6 px-4">
-                                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-500 h-full" style="width: ${percent}%"></div>
-                                </div>
-                                <span class="text-[9px] font-bold text-slate-400 mt-1 block uppercase tracking-tighter">${percent}% Done</span>
-                            </td>
-                            <td class="py-6 px-4 text-right">
-                                <button onclick="deleteProject('${id}')" class="text-slate-300 hover:text-red-500 transition-all"><i class="fas fa-trash-alt text-xs"></i></button>
-                            </td>
+                            <td class="py-6 px-4"><div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full" style="width: ${percent}%"></div></div></td>
+                            <td class="py-6 px-4 text-right"><button onclick="deleteProject('${d.id}')" class="text-slate-300 hover:text-red-500 transition"><i class="fas fa-trash-alt"></i></button></td>
                         </tr>`;
                 }
-                document.getElementById('realProjectCount').innerText = snapshot.size;
+                document.getElementById('realProjectCount').innerText = snap.size;
             });
         }
 
-        window.openProject = (id, name) => { currentOpenProjectId = id; document.getElementById('currentProjectName').innerText = name; document.getElementById('overviewSection').classList.add('hidden'); document.getElementById('taskView').classList.remove('hidden'); loadTasks(id); };
-        window.showProjectList = () => { document.getElementById('overviewSection').classList.remove('hidden'); document.getElementById('taskView').classList.add('hidden'); };
-        window.deleteProject = async (id) => { if(confirm("Permanently delete workflow?")) await deleteDoc(doc(db, "projects", id)); };
+        window.openProject = (id, name) => {
+            currentPid = id; document.getElementById('currentProjectName').innerText = name;
+            document.getElementById('overviewSection').classList.add('hidden');
+            document.getElementById('taskView').classList.remove('hidden');
+            loadTasks(id);
+        };
 
-        // --- TASK LOGIC ---
+        window.deleteProject = async (id) => { if(confirm("Delete project?")) await deleteDoc(doc(db, "projects", id)); };
+
+        // TASK LOGIC
         function loadTasks(pid) {
             const q = query(collection(db, "tasks"), where("projectId", "==", pid));
-            onSnapshot(q, (snapshot) => {
+            onSnapshot(q, (snap) => {
                 const list = document.getElementById('taskListDisplay'); list.innerHTML = "";
-                let completed = 0;
-                snapshot.forEach((t) => { 
-                    const data = t.data();
-                    if(data.completed) completed++;
+                let done = 0;
+                snap.forEach((t) => {
+                    const data = t.data(); if(data.completed) done++;
                     const pClass = `priority-${(data.priority || 'medium').toLowerCase()}`;
                     list.innerHTML += `
-                        <div class="flex items-center justify-between p-5 bg-white rounded-[1.5rem] border border-slate-100 shadow-sm transition hover:shadow-md">
+                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border">
                             <div class="flex items-center gap-4">
-                                <input type="checkbox" ${data.completed ? 'checked' : ''} onclick="toggleTaskCompletion('${t.id}', ${data.completed})" class="w-5 h-5 rounded-lg border-slate-200 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer">
-                                <div class="flex flex-col">
-                                    <span class="text-sm font-bold ${data.completed ? 'line-through text-slate-300' : 'text-slate-700'}">${data.text}</span>
-                                    <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mt-1 inline-block w-fit ${pClass}">${data.priority || 'MEDIUM'}</span>
-                                </div>
+                                <input type="checkbox" ${data.completed ? 'checked' : ''} onclick="toggleTask('${t.id}', ${data.completed})" class="w-5 h-5">
+                                <span class="${data.completed ? 'line-through text-slate-300' : 'text-slate-700'} font-bold text-sm">${data.text}</span>
                             </div>
-                            <button onclick="deleteTask('${t.id}')" class="text-slate-200 hover:text-red-500 transition"><i class="fas fa-times text-xs"></i></button>
-                        </div>`; 
+                            <button onclick="deleteTask('${t.id}')" class="text-slate-300 hover:text-red-500">×</button>
+                        </div>`;
                 });
-                const percent = snapshot.empty ? 0 : Math.round((completed / snapshot.size) * 100);
-                document.getElementById('projectPercentage').innerText = `${percent}%`;
+                document.getElementById('projectPercentage').innerText = `${snap.empty ? 0 : Math.round((done / snap.size) * 100)}% Completed`;
             });
         }
 
-        window.toggleTaskCompletion = async (id, current) => { await updateDoc(doc(db, "tasks", id), { completed: !current }); };
-        window.deleteTask = async (id) => { await deleteDoc(doc(db, "tasks", id)); };
+        window.toggleTask = async (id, current) => await updateDoc(doc(db, "tasks", id), { completed: !current });
+        window.deleteTask = async (id) => await deleteDoc(doc(db, "tasks", id));
 
+        // ASYNC ADD TASK WITH AI PRIORITY
         window.addManualTask = async () => {
-            const input = document.getElementById('manual-task-input'); const btn = document.getElementById('addTaskBtn');
-            if(!input.value) return; btn.innerText = "Predicting Urgency..."; btn.disabled = true;
+            const input = document.getElementById('manual-task-input'); if(!input.value) return;
             try {
                 const res = await fetch(`${RENDER_URL}/api/ai/chat`, {
                     method: 'POST', headers: {'Content-Type': 'application/json'},
@@ -252,36 +240,38 @@
                 });
                 const data = await res.json();
                 const prio = data.response.toUpperCase().includes("HIGH") ? "HIGH" : data.response.toUpperCase().includes("LOW") ? "LOW" : "MEDIUM";
-                await addDoc(collection(db, "tasks"), { projectId: currentOpenProjectId, text: input.value, priority: prio, completed: false, createdAt: serverTimestamp() });
+                await addDoc(collection(db, "tasks"), { projectId: currentPid, text: input.value, priority: prio, completed: false, createdAt: serverTimestamp() });
                 input.value = "";
-            } catch (e) { console.error(e); } btn.innerText = "Predict Priority & Add"; btn.disabled = false;
+            } catch (e) { alert("AI Task Error"); }
         };
 
-        // --- AI INSIGHTS ---
-        window.generateProjectHealth = async () => {
-            const btn = document.getElementById('ai-insight-btn'); btn.innerText = "Analyzing Health...";
-            const taskQuery = query(collection(db, "tasks"), where("projectId", "==", currentOpenProjectId));
-            const snap = await getDocs(taskQuery);
-            const tasks = snap.docs.map(d => d.data().text).join(", ");
-            const prompt = `Based on these tasks: ${tasks}. Provide a 2-sentence health report for the project. Be professional.`;
-            
+        // AI TASK SUGGESTER (FIXED)
+        window.generateAITasks = async () => {
+            const btn = document.getElementById('ai-task-btn'); const pName = document.getElementById('currentProjectName').innerText;
+            btn.innerText = "Analyzing..."; btn.disabled = true;
             try {
                 const res = await fetch(`${RENDER_URL}/api/ai/chat`, {
                     method: 'POST', headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ prompt })
+                    body: JSON.stringify({ prompt: `Provide exactly 3 short task names for project "${pName}". Separate them only with commas. No numbers.` })
                 });
                 const data = await res.json();
-                alert("AI INSIGHT: " + data.response);
-            } catch (e) { alert("AI Error"); } btn.innerText = "AI Project Insight";
+                const tasks = data.response.split(',');
+                for (const t of tasks) {
+                    if(t.trim()) await addDoc(collection(db, "tasks"), { projectId: currentPid, text: t.trim(), priority: 'MEDIUM', completed: false, createdAt: serverTimestamp() });
+                }
+            } catch (e) { console.error(e); }
+            btn.innerText = "AI Task Suggester"; btn.disabled = false;
         };
 
+        // CHAT AI
         window.askAI = async () => {
             const input = document.getElementById('ai-input'); const btn = document.getElementById('ai-btn'); const text = document.getElementById('ai-text'); const box = document.getElementById('ai-response-box');
-            if(!input.value) return; btn.innerText = "Thinking..."; box.classList.remove('hidden'); text.innerText = "FlowDesk AI is processing...";
+            if(!input.value) return; btn.innerText = "Thinking..."; box.classList.remove('hidden'); text.innerText = "AI is processing...";
             try {
                 const res = await fetch(`${RENDER_URL}/api/ai/chat`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ prompt: input.value }) });
                 const data = await res.json(); text.innerText = data.response;
-            } catch (e) { text.innerText = "AI offline."; } btn.innerText = "Analyze";
+            } catch (e) { text.innerText = "Error: AI Offline."; }
+            btn.innerText = "Ask AI";
         };
 
         document.getElementById('project-form').onsubmit = async (e) => {
@@ -291,8 +281,7 @@
         };
 
         async function fetchStats() {
-            try { const res = await fetch(`${RENDER_URL}/api/stats`); const data = await res.json(); document.getElementById('serverStatus').innerText = data.serverStatus; } 
-            catch (e) { document.getElementById('serverStatus').innerText = "Offline"; }
+            try { const res = await fetch(`${RENDER_URL}/api/stats`); const data = await res.json(); document.getElementById('serverStatus').innerText = data.serverStatus; } catch (e) { }
         }
     </script>
 </body>
